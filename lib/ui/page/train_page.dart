@@ -48,7 +48,7 @@ class _TrainState extends State<TrainPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     WidgetsFlutterBinding.ensureInitialized();
     _init().then((value) => _start());
   }
@@ -65,7 +65,7 @@ class _TrainState extends State<TrainPage> with WidgetsBindingObserver {
     _useTimer.dispose();
     _trainTimer.dispose();
     _controller.dispose();
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
