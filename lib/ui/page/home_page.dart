@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/ui/widget/gesture_video.dart';
@@ -101,8 +101,8 @@ class _HomePageStata extends State<HomePage> {
   Widget _choseGridView() {
     return _gestureIds.isEmpty
         ? const Text("点击手势卡片右上角+号以添加手势,长按已选手势拖动以排序或删除,最多添加20个").setPadding(12)
-        : Badge(
-            position: const BadgePosition(top: -16, end: -16),
+        : badges.Badge(
+            position: badges.BadgePosition.topEnd(top: -16, end: -16),
             badgeContent: DragTarget<int>(
               builder: (context, candidateData, rejectedData) {
                 return InkWell(
@@ -123,13 +123,13 @@ class _HomePageStata extends State<HomePage> {
                       ),
                     ));
               },
-              onWillAccept: (index) {
+              onWillAcceptWithDetails: (index) {
                 return true;
               },
-              onAccept: (index) {
+              onAcceptWithDetails: (index) {
                 _isRemove = true;
                 setState(() {
-                  _removeGesture(index);
+                  _removeGesture(index.data);
                 });
               },
             ).setPadding(5),
@@ -154,7 +154,7 @@ class _HomePageStata extends State<HomePage> {
       itemCount: GestureEntity.gestureList.length,
       itemBuilder: ((context, index) {
         GestureEntity gesture = GestureEntity.gestureList[index];
-        return Badge(
+        return badges.Badge(
           badgeContent: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(100)),
             child: const Icon(
@@ -163,8 +163,10 @@ class _HomePageStata extends State<HomePage> {
             ),
             onTap: () => _addGesture(gesture.id),
           ),
-          badgeColor: Colors.green,
-          elevation: 5,
+          badgeStyle: const badges.BadgeStyle(
+            badgeColor: Colors.green,
+            elevation: 5,
+          ),
           child: ExpansionTileCard(
             borderRadius: const BorderRadius.all(Radius.circular(13)),
             contentPadding: const EdgeInsets.fromLTRB(14, 8, 14, 8),

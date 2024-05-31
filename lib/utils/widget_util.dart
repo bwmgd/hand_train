@@ -63,18 +63,18 @@ extension WidgetExtension on Widget {
   }
 
   Widget setInkWell(void Function() f) {
-    return InkWell(child: this, onTap: f);
+    return InkWell(onTap: f, child: this);
   }
 
   Widget setBackground() {
     return Container(
-        child: this,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(PathUtil.backgroundFileName),
             fit: BoxFit.cover,
           ),
-        ));
+        ),
+        child: this);
   }
 
   Widget setCenter() {

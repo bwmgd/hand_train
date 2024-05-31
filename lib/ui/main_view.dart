@@ -59,6 +59,7 @@ class _MainViewState extends State<MainView> {
   FloatingActionButton _buildFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: Colors.blue,
+      shape: const CircleBorder(),
       onPressed: () {
         Storage().getGestureIds().then((value) async {
           if (value.isEmpty) {
@@ -82,7 +83,8 @@ class _MainViewState extends State<MainView> {
         elevation: 8.0,
         notchMargin: 10,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(child: _tabBar(0)),
             Expanded(child: _tabBar(1)),

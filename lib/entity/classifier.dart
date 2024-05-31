@@ -1,9 +1,9 @@
 import 'dart:math' hide log;
 
-import 'package:image/image.dart' as image_lib;
+import 'package:image/image.dart' as img;
 import 'package:my_flutter_app/utils/path_util.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
+import 'package:tflite_flutter_helper_plus/tflite_flutter_helper_plus.dart';
+import 'package:tflite_flutter_plus/tflite_flutter_plus.dart';
 
 class Classifier {
   Interpreter? _interpreter; //解析器
@@ -40,13 +40,13 @@ class Classifier {
     int padSize = max(inputImage.height, inputImage.width);
     _imageProcessor ??= ImageProcessorBuilder()
         .add(ResizeWithCropOrPadOp(padSize, padSize))
-        .add(ResizeOp(_inputSize, _inputSize, ResizeMethod.BILINEAR))
+        .add(ResizeOp(_inputSize, _inputSize, ResizeMethod.bilinear))
         .build();
     return _imageProcessor!.process(inputImage);
   }
 
   /// 对象检测函数
-  bool predict(image_lib.Image image, int id) {
+  bool predict(img.Image image, int id) {
     if (_interpreter == null) {
       return false;
     }

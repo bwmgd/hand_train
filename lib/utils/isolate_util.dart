@@ -1,7 +1,7 @@
 import 'dart:isolate';
 
 import 'package:camera/camera.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:tflite_flutter_plus/tflite_flutter_plus.dart';
 
 import '../entity/classifier.dart';
 import 'image_util.dart';
@@ -50,7 +50,7 @@ class IsolateUtil {
 /// 绑定数据以在[Isolate]中传递
 class IsolateData {
   late CameraImage cameraImage;
-    late int interpreterAddress;
+  late int interpreterAddress;
   late SendPort responsePort;
   late int id;
 

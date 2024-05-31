@@ -81,7 +81,7 @@ class _TrainState extends State<TrainPage> with WidgetsBindingObserver {
           .startImageStream(_onLatestImageAvailable)
           .then((value) => setState(() {
                 _isStart = true;
-                _useTimer.onExecute.add(StopWatchExecute.start);
+                _useTimer.onStartTimer();
               }));
     });
   }
@@ -90,8 +90,8 @@ class _TrainState extends State<TrainPage> with WidgetsBindingObserver {
   void _stop() {
     setState(() {
       _isStart = false;
-      _useTimer.onExecute.add(StopWatchExecute.stop);
-      _trainTimer.onExecute.add(StopWatchExecute.stop);
+      _useTimer.onStopTimer();
+      _trainTimer.onStopTimer();
     });
     _controller.dispose();
   }
@@ -106,9 +106,7 @@ class _TrainState extends State<TrainPage> with WidgetsBindingObserver {
       case AppLifecycleState.paused:
         _stop();
         break;
-      case AppLifecycleState.inactive:
-        break;
-      case AppLifecycleState.detached:
+      default:
         break;
     }
   }
@@ -215,11 +213,11 @@ class _TrainState extends State<TrainPage> with WidgetsBindingObserver {
         RatingEntity.getRatingIdByTime(trainTime, totalTime));
     _infoList.add(info);
     if (_index < widget._gestures.length - 1) {
-      _useTimer.onExecute.add(StopWatchExecute.reset);
-      _trainTimer.onExecute.add(StopWatchExecute.reset);
+      _useTimer.onResetTimer();
+      _trainTimer.onResetTimer();
       setState(() {
         _index++;
-        _useTimer.onExecute.add(StopWatchExecute.start);
+        _useTimer.onStartTimer();
       });
     } else {
       //训练完成去完成页
@@ -309,9 +307,9 @@ class _TrainState extends State<TrainPage> with WidgetsBindingObserver {
     //如果推理出来的标签是当前的id,则推理成功开始计时
     bool inference = await responsePort.first;
     if (inference && _isStart) {
-      _trainTimer.onExecute.add(StopWatchExecute.start);
+      _trainTimer.onStartTimer();
     } else {
-      _trainTimer.onExecute.add(StopWatchExecute.stop);
+      _trainTimer.onStopTimer();
     }
     predicting = false; //推理完成
   }

@@ -15,11 +15,12 @@ Future<void> main() async {
   // 等待数据库加载完成加载页面
   await DataBase.init().then((value) => binding.deferFirstFrame());
   binding.addPostFrameCallback((_) async {
-    final BuildContext? context = binding.renderViewElement;
+    final BuildContext? context = binding.rootElement;
     PackageInfo.fromPlatform() // 软件版本号
         .then((value) => Store.appVersion = value.version);
     availableCameras().then((value) => Store.cameraList = value); // 可用相机列表
-    if (context != null) { // 预加载背景图
+    if (context != null) {
+      // 预加载背景图
       precacheImage(const AssetImage(PathUtil.backgroundFileName), context);
     }
     binding.allowFirstFrame(); //开始界面加载
